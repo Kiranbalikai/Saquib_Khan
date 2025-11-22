@@ -1,6 +1,7 @@
 "use client";
+
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Raleway } from "next/font/google";
 
@@ -11,87 +12,102 @@ const raleway = Raleway({
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrollingUp, setIsScrollingUp] = useState(true);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      setIsScrollingUp(currentY < lastY || currentY < 10); // show when close to top
+      lastY = currentY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <nav
-      className={`flex flex-wrap justify-between items-center px-[clamp(1rem,5vw,6rem)] py-[clamp(1rem,2vw,2.5rem)] bg-black text-white  ${raleway.className}`}
+      className={`
+        fixed top-0 left-0 w-full z-50 bg-black text-white 
+        transition-transform duration-300
+        ${isScrollingUp ? "translate-y-0" : "-translate-y-full"}
+        ${raleway.className}
+      `}
     >
-      {/* Left Section */}
-      <div className="flex justify-between items-center w-full sm:w-auto">
-        <Link href="/" onClick={() => setIsOpen(false)}>
-          <h1
-            className="font-light tracking-wide"
-            style={{
-              fontSize: "clamp(1.25rem, 2.2vw, 2.25rem)", // smaller and smoother
-              lineHeight: "1.15",
-            }}
-          >
-            SAQIB KHAN
-            <span
-              className="block font-thin tracking-widest"
-              style={{
-                fontSize: "clamp(0.65rem, 1.2vw, 1rem)", // smaller subtitle
-                lineHeight: "1",
-              }}
+      <div className="flex flex-wrap justify-between items-center px-[clamp(1rem,5vw,6rem)] py-[clamp(1rem,1vw,1rem)]">
+        {/* Logo + Name */}
+        <div className="flex justify-between items-center w-full sm:w-auto">
+          <Link href="/" onClick={() => setIsOpen(false)}>
+            <h1
+              className="font-light tracking-wide 
+              text-[clamp(1.4rem,2vw,2.4rem)]  /* larger font on big screens */
+            "
             >
-              CINEMATOGRAPHER, COLORIST, PHOTOGRAPHER
-            </span>
-          </h1>
-        </Link>
+              SAQIB KHAN
+              <span
+                className="block font-thin tracking-widest 
+                text-[clamp(0.75rem,1vw,1.1rem)]
+              "
+              >
+                CINEMATOGRAPHER, COLORIST, PHOTOGRAPHER
+              </span>
+            </h1>
+          </Link>
 
-        {/* Hamburger Icon */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="sm:hidden text-white focus:outline-none ml-3"
-        >
-          {isOpen ? <X size={26} /> : <Menu size={26} />}
-        </button>
-      </div>
+          {/* Hamburger */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="sm:hidden text-white ml-3 py-1"
+          >
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
 
-      {/* Right Section */}
-      <div
-        className={`${
-          isOpen ? "flex" : "hidden"
-        } sm:flex flex-col sm:flex-row gap-[clamp(0.5rem,2vw,3rem)] text-gray-100 uppercase font-light w-full sm:w-auto mt-4 sm:mt-0 transition-all duration-300 ease-in-out`}
-        style={{
-          fontSize: "clamp(0.65rem, 1.2vw, 1.1rem)",
-        }}
-      >
-        {/* <Link
-          href="/photography"
-          className="hover:text-gray-300"
-          onClick={() => setIsOpen(false)}
+        {/* Desktop Menu */}
+        <div
+          className={`
+            hidden sm:flex 
+            gap-[clamp(2rem,3vw,4rem)] 
+            uppercase font-light 
+            text-gray-100
+            text-[clamp(0.9rem,1vw,1.2rem)]
+          `}
         >
-          Photography
-        </Link> */}
-        <Link
-          href="/colorgrading"
-          className="hover:text-gray-300"
-          onClick={() => setIsOpen(false)}
+          <Link href="/colorgrading" className="hover:text-gray-300">
+            Colorgrading
+          </Link>
+
+          <Link href="/contact" className="hover:text-gray-300">
+            Contact
+          </Link>
+        </div>
+
+        {/* Mobile Menu */}
+        <div
+          className={`
+            ${isOpen ? "flex" : "hidden"}
+            sm:hidden flex-col w-full mt-4 
+            gap-6 text-lg uppercase
+          `}
         >
-          Colorgrading
-        </Link>
-        {/* <Link
-          href="/cinematography"
-          className="hover:text-gray-300"
-          onClick={() => setIsOpen(false)}
-        >
-          Cinematography
-        </Link> */}
-        {/* <Link
-          href="/blog"
-          className="hover:text-gray-300"
-          onClick={() => setIsOpen(false)}
-        >
-          Blogs
-        </Link> */}
-        <Link
-          href="/contact"
-          className="hover:text-gray-300"
-          onClick={() => setIsOpen(false)}
-        >
-          Contact
-        </Link>
+          <Link
+            href="/colorgrading"
+            className="hover:text-gray-300"
+            onClick={() => setIsOpen(false)}
+          >
+            Colorgrading
+          </Link>
+
+          <Link
+            href="/contact"
+            className="hover:text-gray-300"
+            onClick={() => setIsOpen(false)}
+          >
+            Contact
+          </Link>
+        </div>
       </div>
     </nav>
   );

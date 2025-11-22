@@ -13,7 +13,7 @@ export default function Footer() {
   return (
     <footer>
       <section
-        className={`bg-black text-gray-300  w-full flex flex-col md:flex-row justify-between items-stretch px-[clamp(1rem,6vw,8rem)] py-4 sm:py-6 md:py-16 ${raleway.className}`}
+        className={`bg-black text-gray-300  w-full flex flex-col md:flex-row justify-between items-stretch px-[clamp(1rem,6vw,8rem)] py-4 md:py-10 ${raleway.className}`}
       >
         {/* LEFT SIDE */}
         <div className="flex flex-col justify-between md:w-1/2  ">
@@ -26,11 +26,11 @@ export default function Footer() {
 
           {/* Middle Section */}
           <div className="flex flex-col space-y-3 mt-auto mb-auto">
-            <p className="text-red-500 text-sm sm:text-base font-light">
+            {/* <p className="text-red-500 text-sm sm:text-base font-light">
               Cinematographer • Colorist • Filmmaker
-            </p>
-            <p className="text-[clamp(0.85rem,1vw,1rem)] leading-relaxed">
-              Email: sqb.artz@gmail.com
+            </p> */}
+            <p className="text-[clamp(0.85rem,1vw,1rem)] leading-relaxed  ">
+              Phone : <span className=" font-sans">+91 9611485476</span>
             </p>
             <p className="text-[clamp(0.8rem,1vw,1rem)] text-gray-400">
               Based in Hubli, India
@@ -87,7 +87,7 @@ export default function Footer() {
         </div>
       </section>
       <div className="bg-black py-4 md:py-10 text-center text-red-500 text-xs md:text-sm font-light tracking-wider">
-        Phone : +91 9611485486
+        Email: sqb.artz@gmail.com{" "}
       </div>
     </footer>
   );

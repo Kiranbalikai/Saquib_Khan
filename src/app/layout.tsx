@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <LightboxProvider>
           <Navbar />
 
-          <main className="grow bg-black">{children}</main>
+          <main className="grow bg-black pt-20 lg:pt-[100px]">{children}</main>
 
           <Footer />
         </LightboxProvider>

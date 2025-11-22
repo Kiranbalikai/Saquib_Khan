@@ -19,33 +19,18 @@ export default function GalleryImage({
 }: GalleryImageProps) {
   const { openLightbox } = useLightbox();
 
-  /**
-   * Strategy:
-   * - On mobile (default): wrapper has h-auto + col-span-12 (from Gallery)
-   *   so image should render full-width and keep its natural aspect ratio.
-   * - On md+ (desktop): wrapper gets fixed height (e.g. md:h-[300px]) so image
-   *   will stretch to fill the tile by using object-cover behavior.
-   *
-   * Implementation:
-   * - Use Image with width/height (intrinsic) so Next can optimize.
-   * - Use responsive classes:
-   *   - w-full h-auto -> for mobile natural ratio
-   *   - md:h-full md:object-cover -> for desktop fill/crop to tile
-   */
   return (
     <div
-      className={`relative overflow-hidden ${shapeClass}`}
-      // prevent clicks from bubbling up to the tile
+      className={`relative overflow-hidden w-full h-full ${shapeClass}`}
       onClick={(e) => e.stopPropagation()}
     >
       <Image
-        src={url}
+        src={url || "/placeholder.svg"}
         alt="Gallery image"
-        width={1200} // large intrinsic size – Next will optimize variants
+        width={1200}
         height={800}
-        className="w-full h-auto md:h-full md:object-cover object-contain cursor-pointer"
+        className="w-full h-full object-cover cursor-pointer"
         onClick={() => openLightbox(imageUrls, index)}
-        // optional: priority or placeholder if needed
       />
     </div>
   );

@@ -21,7 +21,7 @@ export default async function ColorGradingPage() {
 
   return (
     <div
-      className={`grid grid-cols-1 md:grid-cols-3 gap-4 p-8 bg-black ${raleway.className}`}
+      className={`grid grid-cols-1 md:grid-cols-3 gap-4 py-8 px-[clamp(1rem,5vw,6rem)] bg-black ${raleway.className}`}
     >
       {projects.map(
         (p: {
