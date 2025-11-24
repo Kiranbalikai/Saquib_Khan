@@ -1,13 +1,19 @@
 // app/layout.tsx
 
-export const revalidate = 0; // 🔥 No caching anywhere
-export const dynamic = "force-dynamic"; // 🔥 Force all routes to be dynamic
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { LightboxProvider } from "@/components/Lightbox/LightboxContext";
 import type { ReactNode } from "react";
+
+export const metadata = {
+  title: "SAQIB KHAN",
+  description:
+    "A professional photographer, cinematographer, and visual artist specializing in cinematic visuals, portrait photography, and storytelling through motion.",
+};
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
