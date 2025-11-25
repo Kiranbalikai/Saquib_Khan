@@ -11,9 +11,16 @@ export function generateImageUrl(
   width: number,
   height?: number
 ) {
-  let imageBuilder = builder.image(source).width(width);
+  let imageBuilder = builder
+    .image(source)
+    .width(width)
+    .fit("max") // avoid weird stretch
+    .auto("format") // convert JPG/PNG → WebP
+    .quality(70); // compress but looks clean
+
   if (height) {
     imageBuilder = imageBuilder.height(height);
   }
+
   return imageBuilder.url();
 }
